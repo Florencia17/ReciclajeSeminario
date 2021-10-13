@@ -1,4 +1,7 @@
 package ar.edu.unrn.seminario.api;
+
+
+import ar.edu.unrn.seminario.dto.OrdenDeRetiroDTO;
 import ar.edu.unrn.seminario.dto.RolDTO;
 import ar.edu.unrn.seminario.dto.UsuarioDTO;
 import ar.edu.unrn.seminario.dto.ViviendaDTO;
@@ -22,7 +25,7 @@ public class MemoryApi implements IApi{
     private List<Vivienda> viviendas= new ArrayList<>();
     private List<Rol> roles= new ArrayList<>();
     private List<Usuario> usuarios = new ArrayList<>();
-    private List<Pedido> pedidos= new ArrayList<>();
+    private List<OrdenDeRetiro> ordenDeRetiroList = new ArrayList<>();
 
     //VIVIENDA
 
@@ -51,22 +54,29 @@ public class MemoryApi implements IApi{
 
     }*/
 
-    //PEDIDO
-
-
+    //ORDEN DE RETIRO
     @Override
-    public void registrarPedido(String calle, int numero, String barrio, LocalDate fecha, int qresiduo,
-                                boolean vehículo, String observacion ) throws NotNullException{
-        //buscar en la lista de viviendas segun direccion
-
-       // Pedido pedido= new Pedido(vivienda, fecha, qresiduo, vehículo, observacion);
-
-       // pedidos.add(pedido);
-
+    public List<OrdenDeRetiroDTO> obtenerOrdenDeRetiro() throws NotNullException{
+        List<OrdenDeRetiroDTO> dtos= new ArrayList<>();
+        for (OrdenDeRetiro o : this.ordenDeRetiroList){
+            dtos.add(new OrdenDeRetiroDTO(o.getPedido(), o.getFechaOrden(), o.getRecolector(), o.getEstado()));
+        }
+        return dtos;
     }
 
+    @Override
+    public void registrarOrdenDeRetiro(Vivienda vivienda, LocalDate fechaPedido, ArrayList<Residuo> residuos,
+                                       boolean vehivulo, String observacion, LocalDate fechaOrden, Recolector recolector,
+                                       String estado ) throws NotNullException{
+       Pedido pedido= new Pedido(vivienda, fechaPedido, residuos, vehivulo, observacion);
+
+        OrdenDeRetiro ordenDeRetiro= new OrdenDeRetiro( pedido, fechaOrden, recolector, estado);
+        ordenDeRetiroList.add(ordenDeRetiro);
+    }
+
+
     //USUARIOS
- /*   @Override
+   /* @Override
     public void registrarUsuario(String username, String password, String email, String nombre, Integer rol) {
 
     }
@@ -187,3 +197,4 @@ public class MemoryApi implements IApi{
 
     }
 }
+

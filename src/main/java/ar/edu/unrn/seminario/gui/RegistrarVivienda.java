@@ -169,4 +169,3 @@ public class RegistrarVivienda extends JFrame {
         dnitextField.setColumns(10);
     }
 }
-

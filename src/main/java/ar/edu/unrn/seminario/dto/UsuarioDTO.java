@@ -1,4 +1,5 @@
 package ar.edu.unrn.seminario.dto;
+
 import ar.edu.unrn.seminario.modelo.Rol;
 
 public class UsuarioDTO {
@@ -7,10 +8,10 @@ public class UsuarioDTO {
     private String password;
     private String nombre;
     private String email;
-    private Rol rol;
+    private RolDTO rol;
     private boolean estado;
 
-    public UsuarioDTO(String username, String password, String email, Rol rol,
+    public UsuarioDTO(String username, String password, String email, RolDTO rol,
                       boolean estado) {
         super();
         this.username = username;
@@ -47,12 +48,12 @@ public class UsuarioDTO {
         this.email = email;
     }
 
-    public Rol getRol() {
+    public RolDTO getRol() {
         return rol;
     }
 
 
-    public void setRol(Rol rol) {
+    public void setRol(RolDTO rol) {
         this.rol = rol;
     }
 
@@ -70,3 +71,4 @@ public class UsuarioDTO {
 
 
 }
+

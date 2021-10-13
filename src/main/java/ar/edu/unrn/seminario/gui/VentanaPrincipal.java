@@ -1,5 +1,4 @@
 package ar.edu.unrn.seminario.gui;
-
 import ar.edu.unrn.seminario.api.IApi;
 import ar.edu.unrn.seminario.api.MemoryApi;
 import ar.edu.unrn.seminario.api.PersistenceApi;
@@ -64,33 +63,33 @@ public class VentanaPrincipal extends JFrame {
         menuBar.add(UsuariosNewMenu);
 
         JMenuItem AltaModificacionNewMenuItem = new JMenuItem(labels.getString("ventana.principal.menu.alta.modificacion"));
-        AltaModificacionNewMenuItem.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                AltaUsuario altaUsuario= new AltaUsuario(api);
-                altaUsuario.setVisible(true);
-            }
-        });
+        AltaModificacionNewMenuItem.addActionListener(e->new AltaUsuario(api).setVisible(true));
+
+
+
+
+
         UsuariosNewMenu.add(AltaModificacionNewMenuItem);
 
         JMenuItem ListadoNewMenuItem = new JMenuItem(labels.getString("ventana.principal.menu.item.listado"));
-        ListadoNewMenuItem.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
-                ListarUsuario listadoUsuario= new ListarUsuario(api);
-                listadoUsuario.setVisible(true);
-            }
-        });
+        ListadoNewMenuItem.addActionListener(e->new ListarUsuario(api).setVisible(true));
+        /*
+        JMenuItem ListadoNewMenuItem = new JMenuItem(labels.getString("ventana.principal.menu.item.listado"));
+   ListadoNewMenuItem.addActionListener(e->{
+   	new ListarUsuario(api).setVisible(true);
+   	new ListarUsuario(api).setVisible(false);
+
+
+   });*/
         UsuariosNewMenu.add(ListadoNewMenuItem);
 
         JMenu RolesNewMenu = new JMenu(labels.getString("ventana.principal.menu.rol"));
         menuBar.add(RolesNewMenu);
 
         JMenuItem AltaRolNewMenuItem = new JMenuItem(labels.getString("ventana.principal.menu.item.rol"));
-        AltaRolNewMenuItem.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                AltaRol altaRol= new AltaRol(api);
-                altaRol.setVisible(true);
-            }
-        });
+        AltaRolNewMenuItem.addActionListener(e->new AltaRol(api).setVisible(true));
+
+
         RolesNewMenu.add(AltaRolNewMenuItem);
 
         JMenuItem ListarNewMenuItem = new JMenuItem(labels.getString("ventana.principal.menu.lista.rol"));
@@ -113,45 +112,26 @@ public class VentanaPrincipal extends JFrame {
         ViviendasNewMenu.add(RegistrarViviendaNewMenuItem);
 
         JMenuItem ListarViviendaNewMenuItem = new JMenuItem(labels.getString("ventana.principal.menu.item.listar.vivienda"));
-        ListarViviendaNewMenuItem.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                ListadoVivienda listado;
-                try {
-                    listado = new ListadoVivienda(api);
-                    listado.setVisible(true);
-                } catch (SQLException | NotNullException e1) {
-                    // TODO Auto-generated catch block
-                    e1.printStackTrace();
-                }
+        ListarViviendaNewMenuItem.addActionListener(e-> {
 
+            ListadoVivienda listado;
+            try {
+                listado = new ListadoVivienda(api);
+                listado.setVisible(true);
+            } catch (SQLException | NotNullException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
             }
+
+
         });
         ViviendasNewMenu.add(ListarViviendaNewMenuItem);
-        contentPane = new JPanel();
-        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-        setContentPane(contentPane);
-        contentPane.setLayout(null);
 
+        JMenu mnNewMenu = new JMenu(labels.getString("ventana.principal.menu.item.pedidos"));
+        menuBar.add(mnNewMenu);
 
-        JMenu pedidosNewMenu = new JMenu("Pedidos");
-        menuBar.add(pedidosNewMenu);
-
-        JMenuItem realizarpedidoNewMenuItem = new JMenuItem("Realizar Pedido");
-        realizarpedidoNewMenuItem.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                RealizarPedido realizarPedido= new RealizarPedido(api); //agregar api
-                setVisible(true);
-            }
-        });
-        pedidosNewMenu.add(realizarpedidoNewMenuItem);
-
-        JMenuItem listadopedidosNewMenuItem = new JMenuItem("Listado de Pedidos");
-        listadopedidosNewMenuItem.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                //crear clase
-            }
-        });
-        pedidosNewMenu.add(listadopedidosNewMenuItem);
+        JMenuItem mntmNewMenuItem = new JMenuItem(labels.getString("ventana.principal.menu.item.pedido.de.retiro")); //$NON-NLS-1$
+        mnNewMenu.add(mntmNewMenuItem);
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
@@ -164,6 +144,10 @@ public class VentanaPrincipal extends JFrame {
         });
         SalirNewButton.setBounds(179, 217, 89, 23);
         contentPane.add(SalirNewButton);
+
+
+
     }
 }
+
 

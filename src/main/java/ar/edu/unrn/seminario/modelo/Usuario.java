@@ -1,16 +1,20 @@
 package ar.edu.unrn.seminario.modelo;
+
 import java.util.Objects;
+
+import ar.edu.unrn.seminario.dto.RolDTO;
 
 public class Usuario {
     private String username;
     private String email;
     private String password;
-    private Rol rol;
+    private RolDTO rol;
     private boolean estado;
 
 
+
     public Usuario(String username, String password, String email,
-                   Rol rol){
+                   RolDTO rol){
         //agregar excepciones
         this.username= username;
         this.password=password;
@@ -32,8 +36,8 @@ public class Usuario {
         return email;
     }
 
-    public Rol getRol() {
-        return rol;
+    public RolDTO getRol() {
+        return this.rol;
     }
 
     public void activar() {
@@ -72,3 +76,4 @@ public class Usuario {
         return Objects.hash(username, email, password, rol, estado);
     }
 }
+

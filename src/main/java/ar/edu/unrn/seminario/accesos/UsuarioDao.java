@@ -18,7 +18,6 @@ public interface UsuarioDao {
     Usuario find(String username);
 
     List<Usuario> findAll();
-    boolean iniciarSesion(String username, String password) throws NotNullException, AppException;
 
 }
 

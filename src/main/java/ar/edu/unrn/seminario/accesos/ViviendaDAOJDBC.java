@@ -1,4 +1,5 @@
 package ar.edu.unrn.seminario.accesos;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,6 +13,7 @@ import ModeloException.NotNullException;
 import ar.edu.unrn.seminario.modelo.Direccion;
 import ar.edu.unrn.seminario.modelo.Propietario;
 import ar.edu.unrn.seminario.modelo.Rol;
+import ar.edu.unrn.seminario.modelo.Usuario;
 import ar.edu.unrn.seminario.modelo.Vivienda;
 
 public class ViviendaDAOJDBC {
@@ -66,13 +68,13 @@ public class ViviendaDAOJDBC {
         try {
 
             sentencia = ConnectionManager.getConnection().createStatement();
-            resultado = sentencia.executeQuery("SELECT Propietario.nombre,Propietario.apellido,Propietario.dni,Direccion.calle,Direccion.numero,Direccion.barrio\n"
+            resultado = sentencia.executeQuery("SELECT Propietario.nombre,Propietario.apellido,Propietario.dni,Direccion.calle,Direccion.numero,Direccion.barrio,Vivienda.numero_vivienda\n"
                     + "FROM Vivienda JOIN Propietario on Propietario.dni=Vivienda.dniPropietario join Direccion on Vivienda.idDireccion=Direccion.id");
 
             while (resultado.next()) {
                 Propietario propietario=new Propietario(resultado.getString("nombre"),resultado.getString("apellido"),resultado.getString("dni"));
                 Direccion direccion=new Direccion(resultado.getString("calle"),resultado.getInt("numero"),resultado.getString("barrio"));
-                Vivienda vivienda=new Vivienda(propietario,direccion);
+                Vivienda vivienda=new Vivienda(resultado.getInt("numero_vivienda"),propietario,direccion);
 
                 viviendas.add(vivienda);
             }
@@ -87,4 +89,40 @@ public class ViviendaDAOJDBC {
 
         return viviendas;
     }
+    public Vivienda find(int numeroVivienda) {
+        Statement sentencia = null;
+        Vivienda vivienda=null;
+        try {
+            Connection conn = ConnectionManager.getConnection();
+            PreparedStatement resultado = conn.prepareStatement(
+                    "SELECT * FROM `Vivienda`  JOIN Propietario on Propietario.dni=Vivienda.dniPropietario join Direccion on Vivienda.idDireccion=Direccion.id where numero_vivienda=?");
+
+            resultado.setInt(1, numeroVivienda);
+
+
+            ResultSet rs = resultado.executeQuery();
+            if (rs.next()) {
+                Propietario propietario=new Propietario(rs.getString("nombre"),rs.getString("apellido"),rs.getString("dni"));
+                Direccion direccion=new Direccion(rs.getString("calle"),rs.getInt("numero"),rs.getString("barrio"),rs.getInt("id"));
+                vivienda=new Vivienda(rs.getInt("numero_vivienda"),propietario,direccion);
+
+
+
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error al procesar consulta");
+            // TODO: disparar Exception propia
+            // throw new AppException(e, e.getSQLState(), e.getMessage());
+        } catch (Exception e) {
+            // TODO: disparar Exception propia
+            // throw new AppException(e, e.getCause().getMessage(), e.getMessage());
+        } finally {
+            ConnectionManager.disconnect();
+        }
+
+        return vivienda;
+    }
+
+
 }

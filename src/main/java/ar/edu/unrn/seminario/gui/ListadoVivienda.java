@@ -1,5 +1,6 @@
 package ar.edu.unrn.seminario.gui;
 
+
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -64,13 +65,16 @@ public class ListadoVivienda extends JFrame {
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
         contentPane.setLayout(null);
-        ResourceBundle labels = ResourceBundle.getBundle("labels",new Locale("en"));
+        ResourceBundle labels = ResourceBundle.getBundle("labels",new Locale("es"));
         JScrollPane scrollPane = new JScrollPane();
         scrollPane.setBounds(12, 5, 487, 231);
         contentPane.add(scrollPane);
 
         table = new JTable();
-        String[] titulos = { labels.getString("listado.viviendas.titulos.vivienda.DNI"), labels.getString("listado.viviendas.titulos.vivienda.NOMBRE"), labels.getString("listado.viviendas.titulos.vivienda.NOMBRE"), labels.getString("listado.viviendas.titulos.vivienda.ALTURA"), labels.getString("listado.viviendas.titulos.vivienda.BARRIO"),labels.getString("listado.viviendas.titulos.vivienda.CALLE") };
+        String[] titulos = { labels.getString("listado.viviendas.titulos.vivienda.numeroVivienda"),labels.getString("listado.viviendas.titulos.vivienda.DNI"),
+                labels.getString("listado.viviendas.titulos.vivienda.NOMBRE"), labels.getString("listado.viviendas.titulos.vivienda.APELLIDO"),
+                labels.getString("listado.viviendas.titulos.vivienda.ALTURA"), labels.getString("listado.viviendas.titulos.vivienda.BARRIO"),
+                labels.getString("listado.viviendas.titulos.vivienda.CALLE") };
 
 
         modelo = new DefaultTableModel(new Object[][] {}, titulos);
@@ -80,7 +84,7 @@ public class ListadoVivienda extends JFrame {
         // Agrega los usuarios en el model
         for (ViviendaDTO v : viviendas) {
 
-            modelo.addRow(new Object[] { v.getDniPropietario(),v.getNombrePropietario(),v.getApellidoPropietario(),v.getNumero(),v.getBarrio(),v.getCalle()});
+            modelo.addRow(new Object[] {v.getNumeroVivienda(), v.getDnipropietarioDto(),v.getNombrePropietario(),v.getApellidopropietarioDto(),v.getNumero(),v.getBarrio(),v.getCalle()});
         }
 
         table.setModel(modelo);
@@ -132,11 +136,11 @@ public class ListadoVivienda extends JFrame {
                         modelo.fireTableDataChanged();
                     }
                     for (ViviendaDTO v : viviendasFiltradas) {
-                        modelo.addRow(new Object[] { v.getDniPropietario(),v.getNombrePropietario(),v.getApellidoPropietario(),v.getNumero(),v.getBarrio(),v.getCalle()});
+                        modelo.addRow(new Object[] { v.getNumeroVivienda(),v.getDnipropietarioDto(),v.getNombrePropietario(),v.getApellidopropietarioDto(),v.getNumero(),v.getBarrio(),v.getCalle()});
                     }
                     modelo.fireTableDataChanged();
                     if (viviendasFiltradas.size()==0){
-                        throw new NotNullException("No se encontro ninguna vivienda con el apellido:"+textField.getText());
+                        //arreglar esto no va aca, va en el objeto constructor
 
 
 
@@ -166,8 +170,37 @@ public class ListadoVivienda extends JFrame {
         btnFiltrar_1.setBounds(103, 106, 117, 25);
         panel_1.add(btnFiltrar_1);
 
+        JButton btnNewButton_1 = new JButton(labels.getString("listado.viviendas.Pedido.button"));
+        btnNewButton_1.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+                try {
+
+
+                    int tablaElegida=table.getSelectedRow();
+                    if(tablaElegida>=0) {
+                        int numeroVivienda= (int) table.getValueAt(tablaElegida, 0);
+
+                        ViviendaDTO viviendaDto=api.obtenerVivienda(numeroVivienda);
+
+                        RealizarPedido realizarPedido= new RealizarPedido(api,viviendaDto);
+
+                        realizarPedido.setVisible(true);
+                        System.out.println(viviendaDto.getNumeroVivienda());
+                    }
+                    else {
+                        throw new Exception("Ha ocurrido un error no se a elegido ninguna vivienda");
+                    }
+                }
+                catch(Exception e) {
+                    JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                }
+
+            }
+        });
+        btnNewButton_1.setBounds(32, 159, 188, 25);
+        panel_1.add(btnNewButton_1);
+
 
     }
-
 }
 

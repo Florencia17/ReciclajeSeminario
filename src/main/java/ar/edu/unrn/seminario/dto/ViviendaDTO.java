@@ -8,59 +8,73 @@ import java.util.Date;
 
 import ar.edu.unrn.seminario.herramienta.Fecha;
 import ar.edu.unrn.seminario.modelo.Direccion;
-import ar.edu.unrn.seminario.modelo.Propietario;
+
 
 public class ViviendaDTO {
 
-    private Propietario propietario;
-    private Direccion direccion;
+    private PropietarioDTO propietarioDto;
+    private DireccionDTO direccionDto;
     private LocalDateTime fechaRegistro;
+    private int numeroVivienda;
 
-    public ViviendaDTO(Propietario propietario, Direccion direccion){
+    public ViviendaDTO(int numeroVivienda,PropietarioDTO propietarioDto, DireccionDTO direccionDto){
         super(); //de que?
-        this.propietario= propietario;
-        this.direccion=direccion;
+        this.propietarioDto= propietarioDto;
+        this.direccionDto=direccionDto;
+        this.numeroVivienda=numeroVivienda;
+
+    }
+    public ViviendaDTO(PropietarioDTO propietarioDto, DireccionDTO direccionDto){
+        super(); //de que?
+        this.propietarioDto= propietarioDto;
+        this.direccionDto=direccionDto;
+
 
     }
 
+
+    public int getNumeroVivienda() {
+        return this.numeroVivienda;
+    }
     public LocalDateTime getFechaRegistro() {
         return fechaRegistro;
     }
 
-    public Propietario getPropietario() {
-        return propietario;
+    public PropietarioDTO getPropietario() {
+        return propietarioDto;
     }
 
-    public Direccion getDireccion() {
-        return direccion;
+    public DireccionDTO getDireccion() {
+        return direccionDto;
     }
 
 
     //es necesario????????
     public String getCalle(){
-        return this.direccion.getCalle();
+        return this.direccionDto.getCalle();
     }
 
     public int getNumero(){
-        return this.direccion.getNumero();
+        return this.direccionDto.getNumero();
     }
 
     public String getBarrio(){
-        return this.direccion.getBarrio();
+        return this.direccionDto.getBarrio();
     }
 
     public String getNombrePropietario(){
-        return this.propietario.getNombre();
+        return this.propietarioDto.getNombre();
     }
 
-    public String getApellidoPropietario(){
-        return this.propietario.getApellido();
+    public String getApellidopropietarioDto(){
+        return this.propietarioDto.getApellido();
     }
 
-    public String getDniPropietario(){
-        return this.propietario.getDni();
+    public String getDnipropietarioDto(){
+        return this.propietarioDto.getDni();
     }
 
 
 
 }
+

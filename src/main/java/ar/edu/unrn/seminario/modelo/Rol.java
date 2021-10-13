@@ -75,3 +75,4 @@ public class Rol {
         return Objects.hash(codigo, nombre, estado);
     }
 }
+

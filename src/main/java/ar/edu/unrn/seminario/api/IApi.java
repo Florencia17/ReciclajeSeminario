@@ -1,16 +1,13 @@
 package ar.edu.unrn.seminario.api;
 
-import ar.edu.unrn.seminario.dto.RolDTO;
-import ar.edu.unrn.seminario.dto.UsuarioDTO;
-import ar.edu.unrn.seminario.dto.ViviendaDTO;
+import ar.edu.unrn.seminario.dto.*;
 import ar.edu.unrn.seminario.exception.StateException;
-import ar.edu.unrn.seminario.herramienta.Fecha;
-import ar.edu.unrn.seminario.modelo.Direccion;
-import ar.edu.unrn.seminario.modelo.Propietario;
+import ar.edu.unrn.seminario.modelo.*;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -25,19 +22,11 @@ public interface IApi {
 
     void registrarVivienda(String nombre,String apellido,String dni,String calle,int numeroCalle,String barrio) throws NotNullException, AppException;
 
-    public ViviendaDTO obtenerVivienda();
+    ViviendaDTO obtenerVivienda(int numeroVivienda) throws NotNullException;
 
     void emilinarVivienda();
 
-    public List<ViviendaDTO> obtenerViviendas() throws SQLException, NotNullException; //recupera todas las viviendas
-
-    public boolean ingresarUsuario(String username,String password) throws AppException, NotNullException;
-
-    //PEDIDO
-
-    void registrarPedido(String calle, int numero, String barrio, LocalDate fecha, int qresiduo,
-                         boolean vehículo, String observacion) throws NotNullException;
-
+    List<ViviendaDTO> obtenerViviendas() throws SQLException, NotNullException; //recupera todas las viviendas
 
 
 
@@ -69,7 +58,16 @@ public interface IApi {
 
     List<ViviendaDTO>obtenerFiltradoApellido(String apellido) throws SQLException, NotNullException;
 
+    void registrarPedido(ViviendaDTO viviendaDto,LocalDate fecha, ArrayList<ResiduoDTO>residuosDto,
+                         boolean vehiculo, String observacion) throws NotNullException;
 
+    ViviendaDTO obtenerVivienda();
 
+    List<OrdenDeRetiroDTO> obtenerOrdenDeRetiro() throws NotNullException;
 
+    void registrarOrdenDeRetiro(Vivienda vivienda, LocalDate fechaPedido, ArrayList<Residuo> residuos,
+                                boolean vehivulo, String observacion, LocalDate fechaOrden, Recolector recolector,
+                                String estado ) throws NotNullException;
+
+    List<PedidoDTO> obtenerPedidos()throws SQLException, NotNullException;
 }

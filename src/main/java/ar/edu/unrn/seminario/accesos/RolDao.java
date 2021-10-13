@@ -1,6 +1,5 @@
 package ar.edu.unrn.seminario.accesos;
 
-
 import java.util.List;
 
 import ar.edu.unrn.seminario.modelo.Rol;

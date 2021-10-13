@@ -1,10 +1,17 @@
 package ar.edu.unrn.seminario.accesos;
 
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.List;
+
+import ModeloException.NotNullException;
+import ar.edu.unrn.seminario.modelo.Pedido;
 import ar.edu.unrn.seminario.modelo.Vivienda;
 
-import java.time.LocalDate;
-
 public interface PedidoDao {
+    public void create(Vivienda vivienda, Pedido pedido);
+    List<Pedido> findAll()throws SQLException, NotNullException;
+    public Pedido find(int id_pedido);
 
-    void create(ViviendaDao viviendaDao, LocalDate fecha, int qresiduo, boolean vehiculo, String observacion);
 }
+

@@ -1,12 +1,10 @@
-package ar.edu.unrn.seminario.modelo;
+package ar.edu.unrn.seminario.dto;
 
-import java.time.LocalDateTime;
-import java.util.Date;
 
 import ModeloException.NotNullException;
+import ar.edu.unrn.seminario.modelo.Usuario;
 
-public class Propietario {
-
+public class PropietarioDTO {
     private String nombre;
     private String apellido;
     private String dni;
@@ -14,7 +12,7 @@ public class Propietario {
     private int puntosAcumulados;
     //private PedidoRetiro pedidoRetiro;
 
-    public Propietario(String nombre, String apellido, String dni) throws  NotNullException{
+    public PropietarioDTO(String nombre, String apellido, String dni) throws  NotNullException{
         //agregar expeciones
         if (esDatoNulo(nombre))
             throw new NotNullException("nombre");
