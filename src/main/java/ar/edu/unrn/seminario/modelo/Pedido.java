@@ -81,5 +81,8 @@ public class Pedido {
     public int getNroVivienda(){
         return vivienda.getNumeroVivienda();
     }
+
+    public int getidPedidoRetiro() {
+    }
 }
 

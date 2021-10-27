@@ -130,7 +130,7 @@ public class ListadoVivienda extends JFrame {
             public void actionPerformed(ActionEvent arg0) {
                 try {
 
-                    List<ViviendaDTO>viviendasFiltradas= api.obtenerFiltradoApellido(textField.getText());
+                    List<ViviendaDTO>viviendasFiltradas= api.obtenerViviendaPorApellido(textField.getText());
                     if(modelo.getRowCount()>0) {
                         modelo.setRowCount(0);
                         modelo.fireTableDataChanged();
@@ -167,6 +167,43 @@ public class ListadoVivienda extends JFrame {
         panel_1.add(btnFiltrar);
 
         JButton btnFiltrar_1 = new JButton(labels.getString("listado.viviendas.filtrar.button"));
+        btnFiltrar_1.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+                try {
+
+                    List<ViviendaDTO>viviendasFiltradas= api.obtenerViviendaPorBarrio(textField.getText());
+                    if(modelo.getRowCount()>0) {
+                        modelo.setRowCount(0);
+                        modelo.fireTableDataChanged();
+                    }
+                    for (ViviendaDTO v : viviendasFiltradas) {
+                        modelo.addRow(new Object[] { v.getNumeroVivienda(),v.getDnipropietarioDto(),v.getNombrePropietario(),v.getApellidopropietarioDto(),v.getNumero(),v.getBarrio(),v.getCalle()});
+                    }
+                    modelo.fireTableDataChanged();
+                    if (viviendasFiltradas.size()==0){
+                        //arreglar esto no va aca, va en el objeto constructor
+
+
+
+
+                    }
+                }
+                catch(NotNullException e1) {
+                    JOptionPane.showMessageDialog(null, e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                }
+                catch (SQLException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+
+
+                } catch (Exception e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+
+            }
+        });
+
         btnFiltrar_1.setBounds(103, 106, 117, 25);
         panel_1.add(btnFiltrar_1);
 

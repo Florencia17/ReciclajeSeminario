@@ -83,6 +83,13 @@ public class VentanaPrincipal extends JFrame {
    });*/
         UsuariosNewMenu.add(ListadoNewMenuItem);
 
+        JMenuItem ModificarMenuItem = new JMenuItem("Modificar");
+        ModificarMenuItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            }
+        });
+        UsuariosNewMenu.add(ModificarMenuItem);
+
         JMenu RolesNewMenu = new JMenu(labels.getString("ventana.principal.menu.rol"));
         menuBar.add(RolesNewMenu);
 
@@ -126,6 +133,13 @@ public class VentanaPrincipal extends JFrame {
 
         });
         ViviendasNewMenu.add(ListarViviendaNewMenuItem);
+
+        JMenuItem ModificarViviendaMenuItem = new JMenuItem("Modificar");
+        ModificarViviendaMenuItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            }
+        });
+        ViviendasNewMenu.add(ModificarViviendaMenuItem);
 
         JMenu mnNewMenu = new JMenu(labels.getString("ventana.principal.menu.item.pedidos"));
         menuBar.add(mnNewMenu);

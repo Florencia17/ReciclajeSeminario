@@ -12,4 +12,5 @@ public interface ViviendaDAO {
     void create(Propietario propietario,Direccion direccion);
     List<Vivienda> findAll();
     public Vivienda find(String username);
+
 }

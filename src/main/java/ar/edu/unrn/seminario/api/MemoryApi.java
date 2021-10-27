@@ -1,10 +1,7 @@
 package ar.edu.unrn.seminario.api;
 
 
-import ar.edu.unrn.seminario.dto.OrdenDeRetiroDTO;
-import ar.edu.unrn.seminario.dto.RolDTO;
-import ar.edu.unrn.seminario.dto.UsuarioDTO;
-import ar.edu.unrn.seminario.dto.ViviendaDTO;
+import ar.edu.unrn.seminario.dto.*;
 import ar.edu.unrn.seminario.exception.StateException;
 import ar.edu.unrn.seminario.herramienta.Fecha;
 import ar.edu.unrn.seminario.modelo.*;
@@ -53,6 +50,11 @@ public class MemoryApi implements IApi{
     public void emilinarVivienda(String direccion) {
 
     }*/
+
+    @Override
+    public PropietarioDTO obtenerPropietario() {
+
+    }
 
     //ORDEN DE RETIRO
     @Override
@@ -176,7 +178,7 @@ public class MemoryApi implements IApi{
 
 
     @Override
-    public List<ViviendaDTO> obtenerFiltradoApellido(String apellido) throws SQLException, NotNullException {
+    public List<ViviendaDTO> obtenerViviendaPorApellido(String apellido) throws SQLException, NotNullException {
         // TODO Auto-generated method stub
         return null;
     }

@@ -1,5 +1,6 @@
 package ar.edu.unrn.seminario.api;
 
+import ar.edu.unrn.seminario.accesos.Predicate;
 import ar.edu.unrn.seminario.dto.*;
 import ar.edu.unrn.seminario.exception.StateException;
 import ar.edu.unrn.seminario.modelo.*;
@@ -20,6 +21,8 @@ public interface IApi {
 
     //VIVIENDA
 
+    List<ViviendaDTO> filtradoViviendas(Predicate<ViviendaDTO> predicate) throws SQLException, NotNullException;
+
     void registrarVivienda(String nombre,String apellido,String dni,String calle,int numeroCalle,String barrio) throws NotNullException, AppException;
 
     ViviendaDTO obtenerVivienda(int numeroVivienda) throws NotNullException;
@@ -28,7 +31,7 @@ public interface IApi {
 
     List<ViviendaDTO> obtenerViviendas() throws SQLException, NotNullException; //recupera todas las viviendas
 
-
+    PropietarioDTO obtenerPropietario();
 
     //USUARIO
     void registrarUsuario(String username, String password, String email, Integer codigoRol);
@@ -56,7 +59,9 @@ public interface IApi {
 
     void desactivarRol(Integer codigo); // recuperar el objeto Rol, imp
 
-    List<ViviendaDTO>obtenerFiltradoApellido(String apellido) throws SQLException, NotNullException;
+    List<ViviendaDTO> obtenerViviendaPorApellido(String apellido) throws SQLException, NotNullException;
+
+    List<ViviendaDTO> obtenerViviendaPorBarrio(String barrio) throws SQLException, NotNullException;
 
     void registrarPedido(ViviendaDTO viviendaDto,LocalDate fecha, ArrayList<ResiduoDTO>residuosDto,
                          boolean vehiculo, String observacion) throws NotNullException;

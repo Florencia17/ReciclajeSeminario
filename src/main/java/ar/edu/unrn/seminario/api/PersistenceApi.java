@@ -12,32 +12,10 @@ import java.util.stream.*;
 
 import ModeloException.AppException;
 import ModeloException.NotNullException;
-import ar.edu.unrn.seminario.accesos.DireccionDAOJDBC;
-import ar.edu.unrn.seminario.accesos.LoginUsuarioDAOJDBC;
-import ar.edu.unrn.seminario.accesos.LoginUsuarioDao;
-import ar.edu.unrn.seminario.accesos.PedidoDAOJDBC;
-import ar.edu.unrn.seminario.accesos.PedidoDao;
-import ar.edu.unrn.seminario.accesos.PropietarioDAOJDBC;
+import ar.edu.unrn.seminario.accesos.*;
 
-import ar.edu.unrn.seminario.accesos.RolDAOJDBC;
-import ar.edu.unrn.seminario.accesos.RolDao;
-import ar.edu.unrn.seminario.accesos.UsuarioDAOJDBC;
-import ar.edu.unrn.seminario.accesos.UsuarioDao;
-import ar.edu.unrn.seminario.accesos.ViviendaDAOJDBC;
-import ar.edu.unrn.seminario.dto.DireccionDTO;
-import ar.edu.unrn.seminario.dto.PedidoDTO;
-import ar.edu.unrn.seminario.dto.PropietarioDTO;
-import ar.edu.unrn.seminario.dto.ResiduoDTO;
-import ar.edu.unrn.seminario.dto.RolDTO;
-import ar.edu.unrn.seminario.dto.UsuarioDTO;
-import ar.edu.unrn.seminario.dto.ViviendaDTO;
-import ar.edu.unrn.seminario.modelo.Direccion;
-import ar.edu.unrn.seminario.modelo.Pedido;
-import ar.edu.unrn.seminario.modelo.Propietario;
-import ar.edu.unrn.seminario.modelo.Residuo;
-import ar.edu.unrn.seminario.modelo.Rol;
-import ar.edu.unrn.seminario.modelo.Usuario;
-import ar.edu.unrn.seminario.modelo.Vivienda;
+import ar.edu.unrn.seminario.dto.*;
+import ar.edu.unrn.seminario.modelo.*;
 
 public class PersistenceApi implements IApi {
 
@@ -179,6 +157,11 @@ public class PersistenceApi implements IApi {
     }
 
     @Override
+    public PropietarioDTO obtenerPropietario() {
+        return null;
+    }
+
+    @Override
     public UsuarioDTO obtenerUsuario(String username) {
         // TODO Auto-generated method stub
         return null;
@@ -247,6 +230,16 @@ public class PersistenceApi implements IApi {
     }
 
     @Override
+    public List<OrdenDeRetiroDTO> obtenerOrdenDeRetiro() throws NotNullException {
+        return null;
+    }
+
+    @Override
+    public void registrarOrdenDeRetiro(Vivienda vivienda, LocalDate fechaPedido, ArrayList<Residuo> residuos, boolean vehivulo, String observacion, LocalDate fechaOrden, Recolector recolector, String estado) throws NotNullException {
+
+    }
+
+    @Override
     public void emilinarVivienda() {
         // TODO Auto-generated method stub
 
@@ -262,7 +255,7 @@ public class PersistenceApi implements IApi {
         this.rolDao.create(rol);
 
     }
-
+/*
     @Override
     public List<ViviendaDTO> obtenerFiltradoApellido(String apellido) throws SQLException, NotNullException {
 
@@ -293,7 +286,23 @@ public class PersistenceApi implements IApi {
 
 
         return viviendaDto;
+    } */
+
+    @Override
+    public List<ViviendaDTO> filtradoViviendas( Predicate<ViviendaDTO> predicate) throws SQLException, NotNullException {
+        return this.obtenerViviendas().stream().filter(predicate).collect(Collectors.toList());
+
+
     }
+
+    public List<ViviendaDTO> obtenerViviendaPorApellido(String apellido) throws SQLException, NotNullException {
+        return this.filtradoViviendas(viviendaDTO -> viviendaDTO.getApellidopropietarioDto().equals(apellido));
+    }
+
+    public List<ViviendaDTO> obtenerViviendaPorBarrio(String barrio) throws SQLException, NotNullException {
+        return this.filtradoViviendas(viviendaDTO -> viviendaDTO.getBarrio().equals(barrio));
+    }
+
 
 
 
